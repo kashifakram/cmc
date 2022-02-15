@@ -1,0 +1,11 @@
+@import './colors.scss';
+
+.backLink {
+    color: $backButton;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+body {
+    background-color: $bodyBG;
+}
