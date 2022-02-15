@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using NetWebAPI.Helpers;
 using NetWebAPI.Models;
@@ -17,15 +18,15 @@ namespace NetWebAPI.Controllers
 
         [HttpGet]
         [Route("conversion")]
-        public double Get(string currency)
+        public ActionResult<double> Get(string currency)
         {
             var to = currency.Equals("usd") ? CurrencyEnum.USD : CurrencyEnum.GBP;
-
-            return ConversionHelper.GetConversionRate(to);
+        
+            return Ok(ConversionHelper.GetConversionRate(to));
         }
 
         [HttpGet]
         [Route("shipping")]
-        public double Get(double total) => ShippingCostHelper.GetShippingCost(total);
+        public ActionResult<double> Get(double total) => Ok(ShippingCostHelper.GetShippingCost(total));
     }
 }

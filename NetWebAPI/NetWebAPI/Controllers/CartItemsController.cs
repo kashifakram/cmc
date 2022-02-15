@@ -26,9 +26,9 @@ namespace NetWebAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductModel> Get()
+        public ActionResult<IEnumerable<ProductModel>> Get()
         {
-            return Enumerable.Range(1, 10).Select(index => new ProductModel
+            var result = Enumerable.Range(1, 10).Select(index => new ProductModel
             {
                 ProductName = ProductNames[index],
                 ProductPrice = Random.Shared.Next(10, 75),
@@ -37,6 +37,8 @@ namespace NetWebAPI.Controllers
                 ProductId = index
             })
             .ToArray();
+
+            return Ok(result);
         }
 
         [HttpPost("{products}")]
