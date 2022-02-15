@@ -3,7 +3,7 @@ import { CartContext } from "./Layout";
 import AddToCart from "./AddToCart";
 import RemoveFromCart from "./RemoveFromCart";
 
-export default function RenderList({isCheckout, name, price, desc, currency}) {
+export default function RenderList({isCheckout, id, name, price, desc, currency}) {
     const {cartData} = useContext(CartContext);
     const renderButtonText = isCheckout === "true" ? true : false;
     return (
@@ -22,7 +22,7 @@ export default function RenderList({isCheckout, name, price, desc, currency}) {
                     {currency}
                 </td>       
                 <td>
-                {!renderButtonText ? <AddToCart /> : <RemoveFromCart />}
+                {!renderButtonText ? <AddToCart productId={id} /> : <RemoveFromCart productId={id} />}
                     {/* <button type="button" className="btn btn-primary">{renderButtonText}</button> */}
                 </td>                                
             </tr>

@@ -1,29 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import RenderList from "./RenderList";
+import { CartContext } from "./Layout";
+import OrderNow from "./OrderNow";
 
-export default function Checkout({itemsTotal, selectedCountry, items }) {
+export default function Checkout() {
     let grandTotal = 0;
-    const [shippingCost, setShippingCost] = useState(0);
-    let [conversion, setConversion] = useState(1);
 
-    selectedCountry = selectedCountry == undefined || selectedCountry == "" ? "usd" : selectedCountry;
-    itemsTotal = itemsTotal == undefined || isNaN(itemsTotal) ? 50 : itemsTotal;
-    items = items == undefined || items.length < 1 ? 
-    [{"productId": 0, "productName": "Product2", "productPrice": 10, "productDescription": "Product 2 Summary", "productCurrency": "usd"}, 
-    {"productId": 1, "productName": "Product5", "productPrice": 30, "productDescription": "Product 5 Summary", "productCurrency": "usd"}] : items;
 
-    const fetchShippingUrl  = `http://localhost:5055/currency/shipping?total=${itemsTotal}`;
-    const fetchConversionUrl  = `http://localhost:5055/currency/conversion?currency=${selectedCountry}`;
+    const {cartData} = useContext(CartContext);
+    let items = cartData.cartItems;
+    let selectedCountry = cartData.country == "" || cartData.country == undefined ? "aud" : cartData.country;
+    const countryName = selectedCountry == "aud" ? "Australia" : selectedCountry == "gbp" ? "UK" : "USA";
+    let itemsTotal = 0;
 
-    
-    useEffect(() => {
-        fetch(fetchShippingUrl).then(response => response.json()).then(data => { setShippingCost(data) }).catch(error => console.log(error));
-        
-        fetch(fetchConversionUrl).then(response => response.json()).then(data => { setConversion(data) }).catch(error => console.log(error));
+    if(items != undefined && items.length > 0) 
+        items.forEach(item => {
+            itemsTotal += item.productPrice;    
+        });
 
-    }, [])
-
-    grandTotal = conversion * itemsTotal;
+    grandTotal = (cartData.conversion * itemsTotal) + cartData.shippingCost;
 
     return (
         <div>
@@ -48,13 +43,19 @@ export default function Checkout({itemsTotal, selectedCountry, items }) {
                     </thead>
                     <tbody>
                         {
-                            items.map((product) => <RenderList  key={product.productId} isCheckout="true" name={product.productName} price={product.productPrice} desc={product.productDescription} currency={product.productCurrency} />)
+                            items.map((product) => <RenderList  key={product.productId} isCheckout="true" id={product.productId} name={product.productName} price={product.productPrice} desc={product.productDescription} currency={product.productCurrency} />)
                         }
                     </tbody>
                 </table>
+                
+                <p><strong>Selected Country: </strong>{countryName}</p>
 
-                <p><strong>Shipping Cost: </strong>{shippingCost}</p>
-                <p><strong>Grand Total: </strong>{grandTotal}</p>
+                <p><strong>Shipping Cost: </strong>{cartData.totalCartItems ? cartData.shippingCost : 0}</p>
+                 <p><strong>Sub Total: </strong>{itemsTotal}</p>
+                <p><strong>Conversion Rate: </strong>{cartData.totalCartItems ? cartData.conversion : 0}</p>
+                <p><strong>Grand Total: </strong>{cartData.totalCartItems ? grandTotal : 0}</p>
+
+                { cartData.totalCartItems ? <OrderNow /> : ""}
             </div>
         </div>
     )

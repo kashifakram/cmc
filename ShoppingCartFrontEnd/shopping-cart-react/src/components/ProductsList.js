@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import RenderList from "./RenderList";
+import { CartContext } from "./Layout";
 
-export default function ProductsList() {
+export default function ProductsList({totalItems}) {
 
-    const [list, setList] = useState([]);
     const fetchProductsUrl  = "http://localhost:5055/cartitems";
+    const { cartData } = useContext(CartContext);
 
     useEffect(() => {
-        fetch(fetchProductsUrl).then(response => response.json()).then(data => setList(data)).catch(error => console.log(error));
+        fetch(fetchProductsUrl).then(response => response.json()).then(data => cartData.setAllProducts(data)).catch(error => console.log(error));
     }, [])
 
     return (
@@ -32,7 +33,7 @@ export default function ProductsList() {
                     </thead>
                     <tbody>
                         {
-                            list.map((product) => <RenderList key={product.productId} name={product.productName} price={product.productPrice} desc={product.productDescription} currency={product.productCurrency} />)
+                            cartData.allProducts.map((product) => <RenderList key={product.productId} id={product.productId} name={product.productName} price={product.productPrice} desc={product.productDescription} currency={product.productCurrency} />)
                         }
                     </tbody>
                 </table>

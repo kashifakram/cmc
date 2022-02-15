@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import Checkout from "./Checkout";
 
 export default function Cart({totalItems}) {
     const items = totalItems == undefined || isNaN(totalItems) ? 0 : totalItems;

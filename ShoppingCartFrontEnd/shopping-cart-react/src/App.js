@@ -12,8 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<ProductsList />} />
-          <Route path="thankyou" element={<ThankYou />} />
-          <Route path="checkout" element={<Checkout />} />
+          <Route path="/thankyou" element={<ThankYou />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </BrowserRouter>
