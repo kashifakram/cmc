@@ -10,12 +10,12 @@ namespace NetWebAPI.Controllers
     {
         private static readonly string[] ProductDescriptions = new[]
         {
-            "Product 0 Summary", "Product 2 Summary", "Product 3 Summary", "Product 4 Summary", "Product 5 Summary", "Product 6 Summary", "Product 7 Summary", "Product 8 Summary", "Product 9 Summary", "Product 10 Summary", "Product 10 Summary"
+            "Product 0 Summary", "Product 1 Summary", "Product 2 Summary", "Product 3 Summary", "Product 4 Summary", "Product 5 Summary", "Product 6 Summary", "Product 7 Summary", "Product 8 Summary", "Product 9 Summary", "Product 10 Summary", "Product 10 Summary"
         };
 
         private static readonly string[] ProductNames = new[]
         {
-            "Product0", "Product2", "Product3", "Product4", "Product5", "Product6", "Product7", "Product8", "Product9", "Product10", "Product10"
+            "Product0", "Product1", "Product2", "Product3", "Product4", "Product5", "Product6", "Product7", "Product8", "Product9", "Product10", "Product10"
         };
 
         private readonly ILogger<CartItemsController> _logger;

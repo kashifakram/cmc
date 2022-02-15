@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import RenderList from "./RenderList";
 
 export default function ProductsList() {

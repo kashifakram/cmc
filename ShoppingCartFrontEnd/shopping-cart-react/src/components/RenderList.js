@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import { CartContext } from "./Layout";
+import AddToCart from "./AddToCart";
+import RemoveFromCart from "./RemoveFromCart";
 
-export default function RenderList({name, price, desc, currency}) {
+export default function RenderList({isCheckout, name, price, desc, currency}) {
     const {cartData} = useContext(CartContext);
-
+    const renderButtonText = isCheckout === "true" ? true : false;
     return (
         <>
             <tr>
@@ -20,7 +22,8 @@ export default function RenderList({name, price, desc, currency}) {
                     {currency}
                 </td>       
                 <td>
-                    <button type="button" className="btn btn-primary">Add to cart</button>
+                {!renderButtonText ? <AddToCart /> : <RemoveFromCart />}
+                    {/* <button type="button" className="btn btn-primary">{renderButtonText}</button> */}
                 </td>                                
             </tr>
         </>
