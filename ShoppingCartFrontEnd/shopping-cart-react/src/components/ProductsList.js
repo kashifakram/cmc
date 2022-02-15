@@ -4,17 +4,18 @@ import RenderList from "./RenderList";
 export default function ProductsList() {
 
     const [list, setList] = useState([]);
+    const fetchProductsUrl  = "http://localhost:5055/cartitems";
 
     useEffect(() => {
-
-    }, [list])
+        fetch(fetchProductsUrl).then(response => response.json()).then(data => setList(data)).catch(error => console.log(error));
+    }, [])
 
     return (
         <div>
             <div className="container mt-5">
                 <table className="table">
                     <thead>
-                        <th>
+                        <tr>
                             <td>
                                 Product Name
                             </td>
@@ -27,11 +28,11 @@ export default function ProductsList() {
                             <td>
                                 Product Currency
                             </td>
-                        </th>
+                        </tr>
                     </thead>
                     <tbody>
                         {
-                            list.map((product) => <RenderList key={product.Id} name={product.Name} price={product.Price} currency={product.Currency} />)
+                            list.map((product) => <RenderList key={product.productId} name={product.productName} price={product.productPrice} desc={product.productDescription} currency={product.productCurrency} />)
                         }
                     </tbody>
                 </table>

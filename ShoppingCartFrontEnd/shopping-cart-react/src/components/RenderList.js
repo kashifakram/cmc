@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CartContext } from "./Layout";
 
 export default function RenderList({name, price, desc, currency}) {
+    const {cartData} = useContext(CartContext);
+
     return (
         <>
             <tr>
@@ -15,6 +18,9 @@ export default function RenderList({name, price, desc, currency}) {
                 </td>
                 <td>
                     {currency}
+                </td>       
+                <td>
+                    <button type="button" className="btn btn-primary">Add to cart</button>
                 </td>                                
             </tr>
         </>
