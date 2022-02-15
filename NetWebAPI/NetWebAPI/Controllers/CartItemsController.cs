@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using NetWebAPI.Models;
 
@@ -7,10 +8,15 @@ namespace NetWebAPI.Controllers
     [Route("[controller]")]
     public class CartItemsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        private static readonly string[] ProductDescriptions = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+            "Product 0 Summary", "Product 2 Summary", "Product 3 Summary", "Product 4 Summary", "Product 5 Summary", "Product 6 Summary", "Product 7 Summary", "Product 8 Summary", "Product 9 Summary", "Product 10 Summary", "Product 10 Summary"
+        };
+
+        private static readonly string[] ProductNames = new[]
+        {
+            "Product0", "Product2", "Product3", "Product4", "Product5", "Product6", "Product7", "Product8", "Product9", "Product10", "Product10"
+        };
 
         private readonly ILogger<CartItemsController> _logger;
 
@@ -20,15 +26,27 @@ namespace NetWebAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CartItemsModel> Get()
+        public IEnumerable<ProductModel> Get()
         {
-            return Enumerable.Range(1, 10).Select(index => new CartItemsModel
+            return Enumerable.Range(1, 10).Select(index => new ProductModel
             {
-                ProductName = DateTime.Now.AddDays(index),
-                ProductPrice = Random.Shared.Next(-20, 55),
-                ProductSummary = Summaries[Random.Shared.Next(Summaries.Length)]
+                ProductName = ProductNames[index],
+                ProductPrice = Random.Shared.Next(10, 75),
+                ProductDescription = ProductDescriptions[index],
+                ProductCurrency = "AUD",
+                ProductId = index
             })
             .ToArray();
         }
+
+        [HttpPost("{products}")]
+        [Route("checkout")]
+        public HttpResponseMessage Post(List<ProductModel> products) => new()
+        {
+            Content = new StringContent("success"),
+            ReasonPhrase = "checked out successfully",
+            StatusCode = (HttpStatusCode.Created),
+        };
+        
     }
 }

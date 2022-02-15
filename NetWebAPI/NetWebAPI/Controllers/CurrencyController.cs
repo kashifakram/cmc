@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using NetWebAPI.Helpers;
+using NetWebAPI.Models;
 
 namespace NetWebAPI.Controllers
 {
@@ -13,17 +15,17 @@ namespace NetWebAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet()]
-        [Route("getconversion")]
-        public IEnumerable<CurrencyController> Get()
+        [HttpGet]
+        [Route("conversion")]
+        public double Get(string currency)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var to = currency.Equals("usd") ? CurrencyEnum.USD : CurrencyEnum.GBP;
+
+            return ConversionHelper.GetConversionRate(to);
         }
+
+        [HttpGet]
+        [Route("shipping")]
+        public double Get(double total) => ShippingCostHelper.GetShippingCost(total);
     }
 }
