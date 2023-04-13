@@ -1,18 +1,24 @@
-import React from 'react'
+import React from "react"
 
 type Props = {
-
+    filterText: string,
+    inStockOnly: boolean,
+    onFilterTextChange: React.Dispatch<React.SetStateAction<string>>,
+    onStockOnlyChange: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SearchBar = (props: Props) => {
+const SearchBar = ({ filterText = '', inStockOnly, onFilterTextChange, onStockOnlyChange }: Props) => {
   return (
     <form>
-        <input type="text" placeholder="search..." />
+        <input type="text" placeholder="search..." value={ filterText } onChange={(e) => onFilterTextChange(e.target.value)} />
+        <br />
         <label>
-            <input type="checkbox" name="" id="" />
+            <input type="checkbox" checked={ inStockOnly } onChange={e => onStockOnlyChange(e.target.checked)} />
             {' '}
             Show in stock products only
         </label>
     </form>
   )
 }
+
+export default SearchBar
