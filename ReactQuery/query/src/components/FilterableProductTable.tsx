@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Product } from "../types"
 import ProductTable from "./ProductTable"
 import SearchBar from "./SearchBar"
+import ImmerPerson from "./ImmerPerson"
 
 type Props = {
     products: Product[]
@@ -18,9 +19,13 @@ const FilterableProductTable = ({ products }: Props) => {
         filterText={ filterText } 
         inStockOnly={ inStockOnly } 
         onFilterTextChange={ setFilterText } 
-        onStockOnlyChange={ setinStockOnly } />
-        
+        onStockOnlyChange={ setinStockOnly } >
+            Child Node
+        </SearchBar>
+
         <ProductTable products={ products } filterText={ filterText } inStockOnly={ inStockOnly } />
+
+        <ImmerPerson />
     </div>
 )}
 
